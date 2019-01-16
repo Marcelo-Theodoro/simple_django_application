@@ -9,6 +9,11 @@ class User(AbstractUser):
     name = models.CharField(max_length=128)
     country = models.CharField(max_length=2, choices=COUNTRIES)
 
+    def save(self, *args, **kwargs):
+        if not Business.objects.filter(user_id=self.id):
+            Business.objects.create(user=self, is_active=True)
+        super().save(*args, **kwargs)
+
 
 class Business(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
