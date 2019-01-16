@@ -11,5 +11,7 @@ class User(AbstractUser):
 
 
 class Business(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="business", on_delete=models.CASCADE
+    )
     is_active = models.BooleanField(default=False)
